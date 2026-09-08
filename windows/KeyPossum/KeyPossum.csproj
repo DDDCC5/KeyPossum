@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF><EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier><PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>KeyPossum</AssemblyName><Version>0.1.0-alpha.1</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon Condition="Exists('../../assets/keypossum.ico')">../../assets/keypossum.ico</ApplicationIcon>
+    <StartupObject>KeyPossum.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../KeyPossum.Core/KeyPossum.Core.csproj" />
+    <Resource Include="../../assets/keypossum.png" Link="keypossum.png" Condition="Exists('../../assets/keypossum.png')" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+.DS_Store
+.build/
+bin/
+obj/
+dist/
+.tools/
+.cache/
+.superpowers/
+*.user
+*.suo
