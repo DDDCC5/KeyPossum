@@ -1,0 +1,33 @@
+name: Publish release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Publish tested preview packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          cd release-assets
+          sha256sum *.zip *.dmg > SHA256SUMS.txt
+          gh release create v0.1.1-alpha.1 *.zip *.dmg SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --target "$RELEASE_COMMIT" \
+            --title "KeyPossum 0.1.1-alpha.1 — macOS crash fix" \
+            --prerelease --notes-file ../docs/release-0.1.1.md

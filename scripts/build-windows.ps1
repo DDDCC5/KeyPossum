@@ -11,7 +11,7 @@ Copy-Item (Join-Path $root "LICENSE") $OutputDirectory
 $notices = Join-Path $OutputDirectory "third-party"
 New-Item -ItemType Directory -Path $notices -Force | Out-Null
 Copy-Item (Join-Path $root "third-party/*") $notices -Recurse -Force
-$archive = Join-Path (Split-Path -Parent $OutputDirectory) "KeyPossum-0.1.0-alpha.1-windows-x64.zip"
+$archive = Join-Path (Split-Path -Parent $OutputDirectory) "KeyPossum-0.1.1-alpha.1-windows-x64.zip"
 Compress-Archive -Path (Join-Path $OutputDirectory "*") -DestinationPath $archive -Force
 Write-Host "Published self-contained Windows 11 x64 application: $OutputDirectory"
 Write-Host "Release archive: $archive"

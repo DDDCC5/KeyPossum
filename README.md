@@ -6,7 +6,9 @@
 
 [English](README.en.md) · [安装与使用](docs/installation.md) · [测试清单](docs/testing.md) · [GitHub 新手指南](docs/github-guide.md)
 
-> **0.1.0-alpha.1：早期版本，用户已在 macOS 与 Windows 两台目标设备上确认运行和功能正常。** 编译成功不代表所有设备输入都能拦截。首次使用必须进行 15 秒试测，尝试媒体键、鼠标、触控板多指手势，再确认没有输入漏出。发现漏出或不确定时，不要开始清洁。Windows 触控屏尚不支持。实际验证记录见 [verification.md](docs/verification.md)。
+[**下载安装包（无需编译）**](https://github.com/DDDCC5/KeyPossum/releases/tag/v0.1.1-alpha.1)
+
+> **0.1.1-alpha.1：修复 macOS 特殊按键事件导致的闪退。** 编译成功不代表所有设备输入都能拦截。首次使用必须进行 15 秒试测，尝试媒体键、鼠标、触控板多指手势，再确认没有输入漏出。发现漏出或不确定时，不要开始清洁。Windows 触控屏尚不支持。实际验证记录见 [verification.md](docs/verification.md)。
 
 ## 怎么用
 
@@ -23,7 +25,7 @@
 
 | 平台 | 首版目标 | 分发方式 |
 | --- | --- | --- |
-| macOS | 26 或更新，Apple Silicon | ZIP 中的 `KeyPossum.app` |
+| macOS | 26 或更新，Apple Silicon | DMG 拖入“应用程序”，也提供 ZIP |
 | Windows | Windows 11，Intel／AMD x64，非触控屏设备 | 解压完整程序文件夹，运行 `KeyPossum.exe` |
 
 内置和外接输入设备均在试测范围内。设备变化会结束当前会话并要求重新验证。电源键、固件功能、Windows `Ctrl+Alt+Del` 等系统保留操作不在保护范围内。普通应用不能承诺覆盖安全桌面、驱动专用手势或所有厂商扩展。
@@ -52,7 +54,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1
 
 脚本先运行核心测试，再打包至 `dist/`。Windows 分发包包含 .NET 运行时，使用者无需另装 SDK。`ExecutionPolicy Bypass` 只用于这一次脚本进程，不修改系统的永久策略。
 
-也可以上传到 GitHub 后使用仓库的 **Build** 工作流构建两个版本。工作流只生成构建产物，不自动发布正式版本。
+也可以上传到 GitHub 后使用仓库的 **Build** 工作流构建两个版本。Build 工作流生成构建产物；手动运行 Publish release 工作流，通过双平台检查后发布预览版安装包。
 
 ## 项目结构
 

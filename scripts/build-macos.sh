@@ -2,6 +2,9 @@
 set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$project_root"
+mkdir -p .cache
+swiftc macos/Sources/KeyPossum/MediaEventDecoder.swift macos/Tests/InputEventTests/main.swift -o .cache/input-event-tests
+.cache/input-event-tests
 swift run --package-path macos --scratch-path .cache/swift-build --disable-sandbox SessionTests
 swift build --package-path macos --scratch-path .cache/swift-build --disable-sandbox -c release --product KeyPossum --arch arm64
 binary_dir="$(swift build --package-path macos --scratch-path .cache/swift-build --disable-sandbox -c release --show-bin-path --arch arm64)"
@@ -18,8 +21,8 @@ cat > "$bundle/Contents/Info.plist" <<'PLIST'
 <key>CFBundleName</key><string>KeyPossum</string>
 <key>CFBundleDisplayName</key><string>KeyPossum</string>
 <key>CFBundleIdentifier</key><string>org.keypossum.app</string>
-<key>CFBundleVersion</key><string>0.1.0-alpha.1</string>
-<key>CFBundleShortVersionString</key><string>0.1.0</string>
+<key>CFBundleVersion</key><string>0.1.1-alpha.1</string>
+<key>CFBundleShortVersionString</key><string>0.1.1</string>
 <key>CFBundleExecutable</key><string>KeyPossum</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleIconFile</key><string>keypossum</string>
@@ -30,5 +33,12 @@ cat > "$bundle/Contents/Info.plist" <<'PLIST'
 PLIST
 codesign --force --sign - "$bundle"
 codesign --verify --deep --strict "$bundle"
-ditto -c -k --sequesterRsrc --keepParent "$bundle" "$project_root/dist/KeyPossum-0.1.0-alpha.1-macos-arm64.zip"
+ditto -c -k --sequesterRsrc --keepParent "$bundle" "$project_root/dist/KeyPossum-0.1.1-alpha.1-macos-arm64.zip"
 echo "Built: $bundle"
+
+staging="$(mktemp -d)"
+trap 'rm -rf "$staging"' EXIT
+ditto "$bundle" "$staging/KeyPossum.app"
+ln -s /Applications "$staging/Applications"
+cp docs/installation.md "$staging/INSTALL.md"
+hdiutil create -volname "KeyPossum" -srcfolder "$staging" -ov -format UDZO "$project_root/dist/KeyPossum-0.1.1-alpha.1-macos-arm64.dmg"

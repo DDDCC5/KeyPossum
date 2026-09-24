@@ -1,3 +1,5 @@
+[**Download prebuilt apps**](https://github.com/DDDCC5/KeyPossum/releases/tag/v0.1.1-alpha.1) — macOS DMG and Windows portable ZIP. Version 0.1.1-alpha.1 fixes the macOS Caps Lock/input-source event crash. macOS builds are ad-hoc signed, not notarized.
+
 <p align="center"><img src="assets/keypossum.png" width="140" alt="An opossum playing dead on a keycap"></p>
 
 # KeyPossum

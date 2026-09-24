@@ -2,7 +2,7 @@
 
 ## Mac（Apple 芯片，macOS 26+）
 
-1. 解压 `KeyPossum-0.1.0-alpha.1-macos-arm64.zip`，将 `KeyPossum.app` 拖入“应用程序”。
+1. 从 [下载页面](https://github.com/DDDCC5/KeyPossum/releases/tag/v0.1.1-alpha.1) 下载 `KeyPossum-0.1.1-alpha.1-macos-arm64.dmg`，双击打开后，将 `KeyPossum.app` 拖到旁边的 Applications（应用程序）。更新前先退出旧版，再选择替换。也可以使用 ZIP 包。
 2. 双击打开。首版仅作本地临时签名，没有 Apple 公证。如果系统阻止打开，在确认来源后，使用“系统设置 → 隐私与安全性”中的单应用“仍要打开”流程。不要关闭系统整体安全保护。
 3. 在应用中点击“授予权限”。按系统提示，在“隐私与安全性 → 辅助功能”和“输入监控”中允许 KeyPossum。授予后退出并重新打开。
 4. 显示英文是正常的：应用跟随系统首选语言。把系统首选语言设为中文后重新启动才会显示中文。
@@ -11,7 +11,7 @@
 
 ## Windows（Intel／AMD x64，Windows 11）
 
-1. 解压 `KeyPossum-0.1.0-alpha.1-windows-x64.zip` 到一个固定文件夹。
+1. 解压 `KeyPossum-0.1.1-alpha.1-windows-x64.zip` 到一个固定文件夹。
 2. 保留文件夹中所有文件，不要只拿走 EXE。运行其中的 `KeyPossum.exe`。发布包已包含 .NET 运行时。
 3. 如需管理员授权，确认程序来源后批准 UAC 提示。首版没有商业代码签名，系统可能提示发布者未知。
 4. 如果系统检测到触控屏，首版会阻止进入清洁模式。请不要为了跳过检查去禁用设备或改系统注册表。

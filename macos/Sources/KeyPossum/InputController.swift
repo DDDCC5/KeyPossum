@@ -150,12 +150,18 @@ final class InputController {
         } else if physical && type == .flagsChanged {
             pressed = ModifierState.applying(flags: event.flags.rawValue, to: pressed)
             session.update(keys: pressed, now: Clock.now)
-        } else if physical && type.rawValue == 14, let native = NSEvent(cgEvent: event), native.subtype.rawValue == 8 {
-            let media = 1000 + ((native.data1 >> 16) & 0xffff)
-            let state = (native.data1 >> 8) & 0xff
-            if state == 0x0a { pressed.insert(media) }
-            else if state == 0x0b { pressed.remove(media) }
-            session.update(keys: pressed, now: Clock.now)
+        } else if physical && type.rawValue == 14 {
+            switch MediaEventDecoder.decode(event) {
+            case .value(let transition):
+                if let transition {
+                    if transition.isDown { pressed.insert(transition.key) }
+                    else { pressed.remove(transition.key) }
+                    session.update(keys: pressed, now: Clock.now)
+                } else { session.activity(now: Clock.now) }
+            case .unavailable:
+                // Fail open through normal tap cleanup if the UI cannot decode promptly.
+                stop("event-decoding"); session.finish(.failure)
+            }
         } else {
             session.activity(now: Clock.now)
         }
